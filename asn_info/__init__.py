@@ -15,6 +15,14 @@ retry_strategy = Retry(
 
 load_dotenv()
 
+__version__ = "0.1"
+__author__ = "Massimiliano Stucchi"
+__author_email__ = "max@stucchi.ch"
+__copyright__ = "Copyright 2023, Massimiliano Stucchi"
+__license__ = "BSD"
+__status__ = "Stable"
+__url__ = "https://github.com/stucchimax/asn_info"
+
 class Asns:
     def __init__(self):
         
