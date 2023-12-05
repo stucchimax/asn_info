@@ -1,5 +1,6 @@
 
 import os
+import re
 import requests
 
 from dotenv import load_dotenv 
@@ -15,7 +16,7 @@ retry_strategy = Retry(
 
 load_dotenv()
 
-__version__ = "0.1"
+__version__ = "0.2"
 __author__ = "Massimiliano Stucchi"
 __author_email__ = "max@stucchi.ch"
 __copyright__ = "Copyright 2023, Massimiliano Stucchi"
@@ -104,4 +105,14 @@ class Asns:
         else:
             return("No MANRS Data available")
 
-
+    def asns_per_country(self, country):
+        if re.match("^[A-Z]{2}$", country):
+            output = {}
+        
+            for asn in self.asns:
+                if self.asns[asn]['country'] == country:
+                    output[asn] = self.asns[asn]
+        
+            return(output)
+        else:
+            raise Exception("Country should be in ISO 2-letter format, all uppercase")

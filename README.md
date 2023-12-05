@@ -29,6 +29,7 @@ h = asn_data.load_asn_data(add_manrs_data=True)
 print(asn_data.get_as_name(58280))
 print(asn_data.get_as_country(58280))
 print(asn_data.is_manrs_participant(58280))
+
 ```
 
 Result:
@@ -37,5 +38,22 @@ Result:
 STUCCHIMAX-AS Massimiliano Andrea Stucchi
 CH
 False
+```
+
+You can also filter the ASNs per country, as follows:
+
+```python
+switzerland = asn_data.asns_per_country("CH")
+
+for asn in switzerland:
+    print("{} has {}".format(asn, switzerland[asn]))
+```
+
+Output:
+
+```
+...
+58280 has {'country': 'CH', 'as_name': 'STUCCHIMAX-AS Massimiliano Andrea Stucchi'}
+...
 ```
 
