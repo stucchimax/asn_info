@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2020, Massimiliano Stucchi
+# Copyright (c) 2020-2023, Massimiliano Stucchi
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -23,52 +23,27 @@
 #OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-
-import asn_info
-version = asn_info.__version__
-
-import codecs
-import os
-import sys
-
-from os.path import abspath, dirname, join
 from setuptools import setup, find_packages
 
-here = abspath(dirname(__file__))
+import pathlib
 
+here = pathlib.Path(__file__).parent.resolve()
 
-def parse_requirements(filename):
-    """ load requirements from a pip requirements file """
-    lineiter = (line.strip() for line in open(filename))
-    return [line for line in lineiter if line and not line.startswith("#")]
-
-with codecs.open(join(here, 'README.md'), encoding='utf-8') as f:
-    README = f.read()
-
-if sys.argv[-1] == 'publish':
-    os.system('python3 setup.py sdist upload')
-    print("You probably want to also tag the version now:")
-    print(("  git tag -a %s -m 'version %s'" % (version, version)))
-    print("  git push --tags")
-    sys.exit()
-
-install_reqs = parse_requirements('requirements.txt')
-reqs = install_reqs
+long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name='asn_info',
-    version=version,
-    maintainer="Massimiliano Stucchi",
-    maintainer_email='max@stucchi.ch',
+    version="0.4",
+    author="Massimiliano Stucchi",
+    author_email='max@stucchi.ch',
     url='https://github.com/stucchimax/asn_info',
     description='A python library providing information about ASNs (AS Name, Country and MANRS membership)',
-    long_description=README,
+    long_description=long_description,
     long_description_content_type="text/markdown",
     license='BSD',
     keywords='asn autonomous systems routing networking',
-    setup_requires=reqs,
-    install_requires=reqs,
+    install_requires=[
+        "requests"],
     classifiers=[
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',

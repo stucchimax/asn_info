@@ -3,8 +3,6 @@ import os
 import re
 import requests
 
-from dotenv import load_dotenv 
-
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
@@ -14,9 +12,7 @@ retry_strategy = Retry(
         allowed_methods=["HEAD", "GET", "OPTIONS"]
     )
 
-load_dotenv()
-
-__version__ = "0.2"
+__version__ = "0.4"
 __author__ = "Massimiliano Stucchi"
 __author_email__ = "max@stucchi.ch"
 __copyright__ = "Copyright 2023, Massimiliano Stucchi"
@@ -61,6 +57,12 @@ class Asns:
         
         if add_manrs_data == True:
             self.manrs_data = True
+            for asn in self.asns:
+                # Some MANRS data from time to time comes in as empty,
+                # so it's better to fill in all the ASNs as not being
+                # MANRS participants, and then flip to True those who are.
+                self.asns[asn]['manrs'] = False
+
             self.load_manrs_asn_data()
         else:
             self.manrs_data = False
